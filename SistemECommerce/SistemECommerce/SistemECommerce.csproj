@@ -8,8 +8,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Client.cs" />
       <Compile Remove="GestionareProduse.cs" />
+      <Compile Remove="Customer.cs" />
     </ItemGroup>
 
 </Project>
