@@ -13,5 +13,10 @@ public class Utilizator
         Nume = nume;
         Email = email;
     }
-    
+
+    //mi l-a generat intellisense-ul
+    protected Utilizator(int id, string nume, string email)
+    {
+        throw new NotImplementedException();
+    }
 }
