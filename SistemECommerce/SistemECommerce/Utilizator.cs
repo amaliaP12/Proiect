@@ -7,16 +7,10 @@ public class Utilizator
     public string Email { get; set; }
    
 
-    public Utilizator(int id, string nume, string email, string parola, string rol)
+    public Utilizator(int id, string nume, string email)
     {
         Id = id;
         Nume = nume;
         Email = email;
-    }
-
-    //mi l-a generat intellisense-ul
-    protected Utilizator(int id, string nume, string email)
-    {
-        throw new NotImplementedException();
     }
 }
