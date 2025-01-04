@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <Compile Remove="Client.cs" />
+      <Compile Remove="GestionareProduse.cs" />
     </ItemGroup>
 
 </Project>
