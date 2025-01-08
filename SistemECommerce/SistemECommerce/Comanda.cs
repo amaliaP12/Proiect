@@ -3,12 +3,23 @@ namespace SistemECommerce;
 public class Comanda
 {
     public int Id { get; set; }
-    public DateTime DataComenzii { get; set; }
+    public Client Client { get; set; }  
+    public DateTime DataComenzii { get; set; }=DateTime.Now;
     public string Status { get; set; } = "In Procesare";
     public string AdresaLivrare { get; set; }
+    public DateTime? DataLivrarii { get; set; }
     public List<(Produs, int)> Produse { get; set; } = new List<(Produs, int)>();
-    public decimal Total { get; set; }
+    public decimal Total => CalculeazaTotal();
     
+    public Comanda(int id, Client client, string adresa)
+    {
+        Id = id;
+        Client = client;
+        Produse = new List<(Produs, int)>();
+        DataComenzii = DateTime.Now;
+        AdresaLivrare = adresa;
+    }
+
     public (bool succes, string errormessage) Valid()
     {
         if (Produse == null || Produse.Count == 0)
@@ -30,7 +41,7 @@ public class Comanda
 
             if (cantitate > produs.Stoc)
             {
-                return (false,"Produsul " + produs.Nume + " nu are stoc suficient (cerut: "+cantitate+" disponibil: "+produs.Stoc);
+                return (false,"Produsul " + produs.Nume + " nu are stoc suficient (cerut: "+cantitate+" disponibil: "+produs.Stoc+")");
             }
         }
         return (true, string.Empty);
@@ -45,5 +56,33 @@ public class Comanda
         }
 
         return total;
+    }
+
+    public bool ModificaStatus(string nouStatus)
+    {
+        var statusuri = new List<string> { "In Procesare", "Expediata", "Livrata" };
+        if (!statusuri.Contains(nouStatus))
+        {
+            Console.WriteLine("Eroare: Status invalid!");
+            return false;
+        }
+
+        if (Status == "Livarata" || Status == "Anulata")
+        {
+            Console.WriteLine("Eroare: Comanda finalizata nu poate fi modificata!");
+            return false;
+        }
+
+        Status = nouStatus;
+        if (nouStatus == "Expediata")
+        {
+            DataLivrarii=DateTime.Now.AddDays(3);
+        }
+        else if (nouStatus == "Livrata")
+        {
+            DataLivrarii=DateTime.Now;
+        }
+        Console.WriteLine($"Statusul comenzii a fost modificat la: {Status}");
+        return true;
     }
 }

@@ -10,6 +10,18 @@ public class Produs
     public double Rating { get; set; }
     public string Categorie { get; set; }
     public List<Reducere> Reduceri { get; set; } = new List<Reducere>();
+    private int NrRatinguri = 0;
+    
+    public Produs(int id, string nume, string descriere, decimal pret, int stoc, string categorie)
+    {
+        Id = id;
+        Nume = nume;
+        Descriere = descriere;
+        Pret = pret;
+        Stoc = stoc;
+        Categorie = categorie;
+        Rating = 0;
+    }
 
     public (bool succes, string errormessage) Validare()
     {
@@ -47,11 +59,16 @@ public class Produs
             PretFinal=reducere.AplicareReducere(PretFinal,cantitate);
         }
 
-        return PretFinal;
+        return Math.Max(PretFinal,0);
     }
 
     public void AdaugaRating(int ratingNou)
     {
-        
+        if (ratingNou < 1 || ratingNou > 5)
+        {
+            throw new AggregateException("Ratingul trebuie sa fie intre 1 si 5.");
+        }
+        Rating=(Rating*NrRatinguri+ratingNou)/++NrRatinguri;
     }
+    
 }
