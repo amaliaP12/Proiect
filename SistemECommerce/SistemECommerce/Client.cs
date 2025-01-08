@@ -6,7 +6,7 @@ public class Client:Utilizator
     public Wishlist wishlist { get; set; }
     public CosCumparaturi cosCumparaturi { get; set; }
     public List<Comanda> comenzi { get; set; }
-    public Client(int id, string nume, string email) : base(id, nume, email)
+    public Client(int id, string nume, string email,string parola) : base(id, nume, email,parola)
     {
         wishlist = new();
         cosCumparaturi = new();
