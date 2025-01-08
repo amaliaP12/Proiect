@@ -2,7 +2,7 @@ namespace SistemECommerce;
 
 public class Administrator:Utilizator
 {
-    public Administrator(int id, string nume, string email) : base(id, nume, email)
+    public Administrator(int id, string nume, string email, string parola) : base(id, nume, email, parola)
     {
     }
 
