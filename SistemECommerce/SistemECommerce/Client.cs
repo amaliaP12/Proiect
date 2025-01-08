@@ -63,7 +63,7 @@ public class Client:Utilizator
              Console.WriteLine($"Produsul {produs.Key.Nume}nu este disponibil in aceasta cantitate!");
              return;
             } 
-            comandaNoua.Produse.Add(produs.Key, produs.Value);
+            comandaNoua.Produse.Add((produs.Key, produs.Value));
             produs.Key.Stoc -= produs.Value;
         }
         comenzi.Add(comandaNoua);
