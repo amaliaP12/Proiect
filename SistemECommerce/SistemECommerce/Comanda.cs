@@ -5,7 +5,7 @@ public class Comanda
     public int Id { get; set; }
     public Client Client { get; set; }  
     public DateTime DataComenzii { get; set; }=DateTime.Now;
-    public string Status { get; private set; } = "In Procesare";
+    public string Status { get; set; } = "In Procesare";
     public string AdresaLivrare { get; set; }
     public DateTime? DataLivrarii { get; set; }
     public List<(Produs, int)> Produse { get; set; } = new List<(Produs, int)>();
