@@ -41,7 +41,7 @@ public class Administrator:Utilizator
             Console.WriteLine($"Produsul cu ID-ul {idProdus} nu a fost găsit.");
         }
     }
-    public void VizualizeazaComenzi(List<Comanda> comenzi)
+    public void VizualizareComenzi(List<Comanda> comenzi)
     {
         foreach (var comanda in comenzi)
         {
@@ -49,7 +49,7 @@ public class Administrator:Utilizator
         }
     }
 
-    public void ModificaStatusComanda(List<Comanda> comenzi, int idComanda, string nouStatus)
+    public void ModificareStatusComanda(List<Comanda> comenzi, int idComanda, string nouStatus)
     {
         var comanda = comenzi.Find(c => c.Id == idComanda);
         if (comanda != null)
@@ -65,7 +65,7 @@ public class Administrator:Utilizator
         }
     }
     
-    public void GenereazaFactura(Comanda comanda)
+    public void GenerareFactura(Comanda comanda)
     {
         Console.WriteLine("Factura generata:");
         Console.WriteLine($"ID Comanda: {comanda.Id}");
@@ -90,7 +90,7 @@ public class Administrator:Utilizator
             }
         }
     }
-    public void ActualizeazaStoc(List<Produs> produse, int idProdus, int cantitateNoua)
+    public void ActualizareStoc(List<Produs> produse, int idProdus, int cantitateNoua)
     {
         var produs = produse.Find(p => p.Id == idProdus);
         if (produs != null)
@@ -103,6 +103,43 @@ public class Administrator:Utilizator
             Console.WriteLine($"Produsul cu ID {idProdus} nu a fost găsit.");
         }
     }
-    
-    
+    public void GenerareRaportVanzari(List<Comanda> comenzi)
+    {
+        decimal venitTotal = 0;
+        var produseVandute = new Dictionary<string, int>();
+
+        foreach (var comanda in comenzi)
+        {
+            venitTotal += comanda.Total;
+            foreach (var (produs, cantitate) in comanda.Produse)
+            {
+                if (!produseVandute.ContainsKey(produs.Nume))
+                {
+                    produseVandute[produs.Nume] = 0;
+                }
+                produseVandute[produs.Nume] += cantitate;
+            }
+        }
+
+        Console.WriteLine("Raport vânzări:");
+        Console.WriteLine($"Venit total: {venitTotal:C}");
+        Console.WriteLine("Produse vândute:");
+        foreach (var (numeProdus, cantitate) in produseVandute)
+        {
+            Console.WriteLine($"{numeProdus} - Cantitate: {cantitate}");
+        }
+    }
+    public void AdaugareReducere(List<Produs> produse, int idProdus, Reducere reducere)
+    {
+        var produs = produse.Find(p => p.Id == idProdus);
+        if (produs != null)
+        {
+            produs.Reduceri.Add(reducere);
+            Console.WriteLine($"Reducerea a fost adaugată la produsul {produs.Nume}.");
+        }
+        else
+        {
+            Console.WriteLine($"Produsul cu ID {idProdus} nu a fost găsit.");
+        }
+    }
 }
