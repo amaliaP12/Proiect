@@ -49,6 +49,11 @@ public class Produs
         {
             return (false, $"Produsul are rating invalid");
         }
+
+        if (Id.GetType() != typeof(int))
+        {
+            return (false, "Id invalid");
+        }
         return (true, string.Empty);
     }
     public decimal CalculeazaPretFinal(int cantitate)

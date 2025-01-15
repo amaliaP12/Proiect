@@ -11,9 +11,15 @@ public static class DataManager
     {
         try
         {
-            var options=new JsonSerializerOptions{WriteIndented=true};
-            var json=JsonSerializer.Serialize(data, options);
-            File.WriteAllText(filePath,json);
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath).Close();  // Creează fișierul dacă nu există
+            }
+        
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            var json = JsonSerializer.Serialize(data, options);
+            File.WriteAllText(filePath, json);
+            Console.WriteLine($"Datele au fost salvate în {filePath}");
         }
         catch (Exception ex)
         {
