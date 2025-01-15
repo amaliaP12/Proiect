@@ -1,0 +1,28 @@
+[
+  {
+    "wishlist": {
+      "Produse": []
+    },
+    "cosCumparaturi": {
+      "Produse": {}
+    },
+    "comenzi": [],
+    "Id": 2,
+    "Nume": "Client",
+    "Email": "client@exemplu.com",
+    "Parola": "client123"
+  },
+  {
+    "wishlist": {
+      "Produse": []
+    },
+    "cosCumparaturi": {
+      "Produse": {}
+    },
+    "comenzi": [],
+    "Id": 85616,
+    "Nume": "Lidia",
+    "Email": "paicu.lidia@exemplu.com",
+    "Parola": "lidia123"
+  }
+]
