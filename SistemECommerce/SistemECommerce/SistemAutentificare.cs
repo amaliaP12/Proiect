@@ -22,29 +22,7 @@ public class SistemAutentificare
             Console.WriteLine("Utilizator înregistrat cu succes.");
         }
     }
-
-    // public Utilizator Autentifica(string email, string parola)
-    // {
-    //     UserManager.IncarcaUtilizatori();
-    //    // var utilizator = utilizatori.FirstOrDefault(u => u.Email == email);
-    //     // if (utilizator == null)
-    //     // {
-    //     //     Console.WriteLine("Email incorect.");
-    //     //     return null;
-    //     // }
-    //
-    //     var utilizator = UserManager.Utilizatori.FirstOrDefault(u => 
-    //         u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
-    //
-    //     if (utilizator != null && utilizator.VerificaParola(parola))
-    //     {
-    //         Console.WriteLine($"Autentificare reusita pentru {utilizator.Nume}.");
-    //         return utilizator;
-    //     }
-    //
-    //     Console.WriteLine("Autentificare esuata! Verifica datele introduse.");
-    //     return null;
-    // }
+    
 
     public Utilizator? Autentifica(string email, string parola)
     {
