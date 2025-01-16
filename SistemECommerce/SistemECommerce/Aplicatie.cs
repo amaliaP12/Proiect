@@ -17,16 +17,15 @@ class Aplicatie
     private void IncarcaDateInitiale()
     {
         // Încarcă date doar dacă lista este goală
-        if (produse.Count == 0)
+        var produseIncarcate = DataManager.IncarcaDate<List<Produs>>("produse.json");
+        if (produseIncarcate != null && produseIncarcate.Count > 0)
         {
-            var produseIncarcate = DataManager.IncarcaDate<List<Produs>>("produse.json");
-            produse = produseIncarcate ?? new List<Produs>();
+            produse = produseIncarcate;
         }
-
-        if (comenzi.Count == 0)
+        var comenziIncarcate = DataManager.IncarcaDate<List<Comanda>>("comenzi.json");
+        if (comenziIncarcate != null && comenziIncarcate.Count > 0)
         {
-            var comenziIncarcate = DataManager.IncarcaDate<List<Comanda>>("comenzi.json");
-            comenzi = comenziIncarcate ?? new List<Comanda>();
+            comenzi = comenziIncarcate;
         }
 
         UserManager.IncarcaUtilizatori();
@@ -226,14 +225,14 @@ class Aplicatie
     {
         while (true)
         {
-            Console.WriteLine("\n1. Vizualizeaza produse\n2. Adauga in cos\n3. Plaseaza comanda\n4. Anuleaza comanda\n5. Adauga in wishlist\n6.Iesire\nAlege o optiune:");
+            Console.WriteLine("\n1. Vizualizeaza produse\n2. Adauga in cos\n3. Plaseaza comanda\n4. Anuleaza comanda\n5. Adauga in wishlist\n6.Adauga Rating\n7.Iesire\nAlege o optiune:");
             var optiune = Console.ReadLine();
 
             if (optiune == "1")
             {
                 foreach (var produs in produse)
                 {
-                    Console.WriteLine($"ID: {produs.Id}, Nume: {produs.Nume}, Pret: {produs.Pret}, Stoc: {produs.Stoc}");
+                    Console.WriteLine($"ID: {produs.Id}, Nume: {produs.Nume}, Pret: {produs.Pret}, Stoc: {produs.Stoc}, Rating: {produs.Rating}");
                 }
             }
             else if (optiune == "2")
@@ -281,7 +280,32 @@ class Aplicatie
                     Console.WriteLine("Produsul nu a fost gasit!");
                 }
             }
-            else if(optiune=="6")
+            else if (optiune == "6")
+            {
+                Console.Write("ID produs: ");
+                int id = int.Parse(Console.ReadLine());
+                Console.Write("Rating (1-5): ");
+                int rating = int.Parse(Console.ReadLine());
+                var produs = produse.Find(p => p.Id == id);
+
+                if (produs != null)
+                {
+                    try
+                    {
+                        produs.AdaugaRating(rating);
+                        Console.WriteLine("Rating adaugat cu succes!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Produsul nu a fost gasit!");
+                }
+            }
+            else if(optiune=="7")
             {
                 break;
             }
@@ -295,8 +319,25 @@ class Aplicatie
     private void SalveazaDate()
     {
         UserManager.SalveazaUtilizatori();
-        DataManager.SalvareDate("produse.json", produse);
-        DataManager.SalvareDate("comenzi.json", comenzi);
+        if (produse != null && produse.Count > 0)
+        {
+            DataManager.SalvareDate("produse.json", produse);
+        }
+        else
+        {
+            
+            Console.WriteLine("Nu sunt produse de adaugat! ");
+        }
+
+        if (comenzi != null && comenzi.Count > 0)
+        {
+             DataManager.SalvareDate("comenzi.json", comenzi);
+        }
+        else
+        {
+            Console.WriteLine("Nu sunt comenzi de adaugat! ");
+        }
+       
     }
 }
 

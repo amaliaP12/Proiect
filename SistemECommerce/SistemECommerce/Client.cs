@@ -55,7 +55,7 @@ public class Client:Utilizator
             return ;
         }
 
-        var comandaNoua = new Comanda(comenzi.Count + 1, this, adresa);
+        var comandaNoua = new Comanda( this, adresa);
         foreach (var produs in cosCumparaturi.Produse)
         {
             if (produs.Key.Stoc < produs.Value)
