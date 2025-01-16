@@ -3,6 +3,7 @@ namespace SistemECommerce;
 public class Comanda
 {
     public int Id { get; set; }
+   // [JsonIgnore]
     public Client Client { get; set; }  
     public DateTime DataComenzii { get; set; }=DateTime.Now;
     public string Status { get; set; } = "In Procesare";

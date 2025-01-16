@@ -2,31 +2,56 @@ using System.Data;
 
 namespace SistemECommerce;
 
-public class UserManager
+public static class UserManager
 {
-    private static List<Utilizator>Utilizatori=new List<Utilizator>();
-    private static string FilePath = "utilizatori.json";// s-ar putea sa trebuiasca sa schimb path-ul
-    
+    public static List<Client> Clienti = new List<Client>();
+    public static List<Administrator> Administratori = new List<Administrator>();
+    public static List<Comanda> Comenzi = new List<Comanda>();
+
+    private static string ClientiFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "clienti.json");
+    private static string AdministratoriFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "administratori.json");
+    private static string ComandaFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "comanda.json");
+
     public static void IncarcaUtilizatori()
     {
-        Utilizatori = DataManager.IncarcaDate<List<Utilizator>>(FilePath);
+        Clienti = DataManager.IncarcaDate<List<Client>>(ClientiFilePath) ?? new List<Client>();
+        Administratori = DataManager.IncarcaDate<List<Administrator>>(AdministratoriFilePath) ?? new List<Administrator>();
+        Comenzi=DataManager.IncarcaDate<List<Comanda>>(ComandaFilePath) ?? new List<Comanda>();
+
+        Console.WriteLine($"Clienti încărcați: {Clienti.Count}");
+        Console.WriteLine($"Administratori încărcați: {Administratori.Count}");
+        Console.WriteLine($"Comenzile au fost incarcate! {Comenzi.Count}");
     }
 
     public static void SalveazaUtilizatori()
     {
-        DataManager.SalvareDate(FilePath, Utilizatori);
+        DataManager.SalvareDate(ClientiFilePath, Clienti);
+        DataManager.SalvareDate(AdministratoriFilePath, Administratori);
     }
 
-    public static void AdaugaUtilizatori(Utilizator utilizator)
+    public static void AdaugaClient(Client client)
     {
-        if (!Utilizatori.Exists(u => u.Email == utilizator.Email))
+        if (!Clienti.Exists(c => c.Email == client.Email))
         {
-            Utilizatori.Add(utilizator);
+            Clienti.Add(client);
             SalveazaUtilizatori();
         }
         else
         {
-            Console.WriteLine("Utilizatorul exista deja!");
+            Console.WriteLine("Clientul există deja!");
+        }
+    }
+
+    public static void AdaugaAdministrator(Administrator admin)
+    {
+        if (!Administratori.Exists(a => a.Email == admin.Email))
+        {
+            Administratori.Add(admin);
+            SalveazaUtilizatori();
+        }
+        else
+        {
+            Console.WriteLine("Administratorul există deja!");
         }
     }
 }

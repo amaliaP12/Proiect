@@ -4,34 +4,24 @@ class Program
 {
     static void Main(string[] args)
     {
-        //s-a facut
-        //Console.WriteLine("Hello, World!");
-                var sistemAutentificare = new SistemAutentificare();
+        var aplicatie = new Aplicatie();
 
-                var admin = new Administrator(1, "Admin", "admin@exemplu.com", "admin123");
-                //var client = new Client(2, "Client", "client@exemplu.com", "client123");
+        // Adăugarea unui administrator de test și salvarea lui în sistem
+        var admin = new Administrator(1, "Admin", "admin@exemplu.com", "admin123");
+        UserManager.AdaugaAdministrator(admin);
 
-                sistemAutentificare.InregistreazaUtilizator(admin);
-                //sistemAutentificare.InregistreazaUtilizator(client);
+        // Adăugarea unui client de test și salvarea lui în sistem
+        var client = new Client(2, "Client", "client@exemplu.com", "client123");
+        UserManager.AdaugaClient(client);
 
-                Console.WriteLine("Autentificare utilizator:");
+        // Reîncarcarea utilizatorilor pentru a fi siguri că datele sunt în memorie
+        UserManager.IncarcaUtilizatori();
 
-                Console.Write("ID: ");
-                int id = int.Parse(Console.ReadLine());
+        Console.WriteLine("Administratorul și clientul au fost creați și salvați în sistem.");
 
-                Console.Write("Parola: ");
-                string parola = Console.ReadLine();
-
-                var utilizatorAutentificat = sistemAutentificare.Autentifica(admin);
-
-                if (utilizatorAutentificat != null)
-                {
-                    Console.WriteLine($"Autentificare reusita pentru utilizatorul {utilizatorAutentificat.Nume}.");
-                }
-                else
-                {
-                    Console.WriteLine("Autentificare eșuată.");
-                }
+        // Pornirea aplicației
+        aplicatie.Porneste();
     }
+    
 }
         

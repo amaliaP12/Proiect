@@ -23,36 +23,54 @@ public class SistemAutentificare
         }
     }
 
-    public Utilizator Autentifica(string email, string parola)
+    // public Utilizator Autentifica(string email, string parola)
+    // {
+    //     UserManager.IncarcaUtilizatori();
+    //    // var utilizator = utilizatori.FirstOrDefault(u => u.Email == email);
+    //     // if (utilizator == null)
+    //     // {
+    //     //     Console.WriteLine("Email incorect.");
+    //     //     return null;
+    //     // }
+    //
+    //     var utilizator = UserManager.Utilizatori.FirstOrDefault(u => 
+    //         u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
+    //
+    //     if (utilizator != null && utilizator.VerificaParola(parola))
+    //     {
+    //         Console.WriteLine($"Autentificare reusita pentru {utilizator.Nume}.");
+    //         return utilizator;
+    //     }
+    //
+    //     Console.WriteLine("Autentificare esuata! Verifica datele introduse.");
+    //     return null;
+    // }
+
+    public Utilizator? Autentifica(string email, string parola)
     {
-        var utilizator = utilizatori.FirstOrDefault(u => u.Email == email);
-        if (utilizator == null)
+        UserManager.IncarcaUtilizatori(); 
+
+        var client = UserManager.Clienti.FirstOrDefault(c => 
+            c.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && c.VerificaParola(parola));
+
+        if (client != null)
         {
-            Console.WriteLine("Email incorect.");
-            return null;
+            Console.WriteLine($"Autentificat ca Client: {client.Nume}");
+            return client;
         }
 
-        if (!utilizator.VerificaParola(parola))
+        var admin = UserManager.Administratori.FirstOrDefault(a =>
+            a.Email.Equals(email, StringComparison.OrdinalIgnoreCase) && a.VerificaParola(parola));
+
+        if (admin != null)
         {
-            Console.WriteLine("Parola incorectă.");
-            return null;
+            Console.WriteLine($"Autentificat ca Administrator: {admin.Nume}");
+            return admin;
         }
 
-        Console.WriteLine($"Bine ai venit, {utilizator.Nume}!");
-        return utilizator;
+        Console.WriteLine("Autentificare esuata! Verifica datele introduse.");
+        return null;
     }
 
-    public Utilizator Autentifica(Utilizator utilizator)
-    {
-        var user = utilizatori.FirstOrDefault(u => u.Id == utilizator.Id);
-        if (user == null)
-        {
-            Console.WriteLine("ID incorect.");
-            return null;
-        }
-
-        Console.WriteLine($"Bine ai venit, {user.Nume}!");
-        return user;
-    }
 }
 
