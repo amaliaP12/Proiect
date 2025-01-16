@@ -134,6 +134,7 @@ public class Administrator:Utilizator
         var produs = produse.Find(p => p.Id == idProdus);
         if (produs != null)
         {
+            reducere.Tip = reducere.GetType().Name;//Seteaza tipul reducerii pt serializare corecta
             produs.Reduceri.Add(reducere);
             Console.WriteLine($"Reducerea a fost adaugată la produsul {produs.Nume}.");
         }
