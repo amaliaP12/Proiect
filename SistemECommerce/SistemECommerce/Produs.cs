@@ -58,13 +58,14 @@ public class Produs
     }
     public decimal CalculeazaPretFinal(int cantitate)
     {
+        
         decimal PretFinal = Pret;
         foreach (var reducere in Reduceri)
         {
             PretFinal=reducere.AplicareReducere(PretFinal,cantitate);
         }
-        Pret= Math.Max(PretFinal,0);
-        return Pret;
+        
+        return Math.Max(PretFinal, 0);
     }
 
     public void AdaugaRating(int ratingNou)

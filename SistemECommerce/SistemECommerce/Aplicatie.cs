@@ -232,7 +232,11 @@ class Aplicatie
             {
                 foreach (var produs in produse)
                 {
-                    Console.WriteLine($"ID: {produs.Id}, Nume: {produs.Nume}, Pret: {produs.Pret}, Stoc: {produs.Stoc}, Rating: {produs.Rating}");
+                    Console.WriteLine($"ID: {produs.Id}, Nume: {produs.Nume}, Pret: {produs.Pret}, Stoc: {produs.Stoc}, Rating: {produs.Rating}, Reduceri: ");
+                    foreach (var dis in produs.Reduceri)
+                    {
+                        Console.WriteLine($"{dis.Tip} ");
+                    }
                 }
             }
             else if (optiune == "2")
