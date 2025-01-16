@@ -4,6 +4,7 @@ public abstract class Reducere
 {
     //public string Tip { get; set; }
     public abstract decimal AplicareReducere(decimal pretInitial, int cantitate = 1);
+    public Reducere() { }
 }
 
 public class DiscountProcent : Reducere {

@@ -4,7 +4,11 @@ class Program
 {
     static void Main(string[] args)
     {
-        //s-a facut
-        Console.WriteLine("Hello, World!");
+        var aplicatie = new Aplicatie();
+        
+        // Pornirea aplicației
+        aplicatie.Porneste();
     }
+    
 }
+        
