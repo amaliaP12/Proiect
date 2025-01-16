@@ -3,7 +3,6 @@ namespace SistemECommerce;
 public class Comanda
 {
     public int Id { get; set; }
-   // [JsonIgnore]
     public Client Client { get; set; }  
     public DateTime DataComenzii { get; set; }=DateTime.Now;
     public string Status { get; set; } = "In Procesare";
@@ -12,9 +11,11 @@ public class Comanda
     public List<(Produs, int)> Produse { get; set; } = new List<(Produs, int)>();
     public decimal Total => CalculeazaTotal();
     
-    public Comanda(int id, Client client, string adresa)
+    public Comanda(Client client, string adresa)
     {
-        Id = id;
+        var r= new Random();
+        int random = r.Next(1, 10000);
+        Id = random;
         Client = client;
         Produse = new List<(Produs, int)>();
         DataComenzii = DateTime.Now;
