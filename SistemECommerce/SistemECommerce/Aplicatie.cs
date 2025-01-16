@@ -225,7 +225,7 @@ class Aplicatie
     {
         while (true)
         {
-            Console.WriteLine("\n1. Vizualizeaza produse\n2. Adauga in cos\n3. Plaseaza comanda\n4. Anuleaza comanda\n5. Adauga in wishlist\n6.Adauga Rating\n7.Iesire\nAlege o optiune:");
+            Console.WriteLine("\n1. Vizualizeaza produse\n2. Adauga in cos\n3. Sterge din cos\n4. Modifica cantitate\n5. Elimina produs Wishlist\n6. Mutare produse in cos\n7. Plaseaza comanda\n8. Anuleaza comanda\n9. Adauga in wishlist\n10. Adauga Rating\n11. Iesire\nAlege o optiune:");
             var optiune = Console.ReadLine();
 
             if (optiune == "1")
@@ -256,20 +256,86 @@ class Aplicatie
                     Console.WriteLine("Produsul nu a fost gasit!");
                 }
             }
-            else if (optiune == "3")
+            else if (optiune == "3") // Ștergere din cos
+            {
+                Console.Write("ID produs: ");
+                int id = int.Parse(Console.ReadLine());
+                var produs = client.cosCumparaturi.Produse.Keys.FirstOrDefault(p => p.Id == id);
+
+                if (produs != null)
+                {
+                    client.cosCumparaturi.EliminaProdus(produs);
+                }
+                else
+                {
+                    Console.WriteLine("Produsul nu a fost găsit în cos.");
+                }
+            }
+            else if (optiune == "4") // Modificare cantitate
+            {
+                Console.Write("ID produs: ");
+                int id = int.Parse(Console.ReadLine());
+                Console.Write("Cantitate noua: ");
+                int cantitateNoua = int.Parse(Console.ReadLine());
+
+                var produs = client.cosCumparaturi.Produse.Keys.FirstOrDefault(p => p.Id == id);
+
+                if (produs != null)
+                {
+                    client.cosCumparaturi.ModificaCantitate(produs, cantitateNoua);
+                }
+                else
+                {
+                    Console.WriteLine("Produsul nu a fost găsit în cos.");
+                }
+            }
+            else if (optiune == "5") // Eliminare produs din wishlist
+            {
+                Console.Write("ID produs: ");
+                int id = int.Parse(Console.ReadLine());
+                var produs = client.wishlist.Produse.FirstOrDefault(p => p.Id == id);
+
+                if (produs != null)
+                {
+                    client.wishlist.EliminaProdus(produs);
+                }
+                else
+                {
+                    Console.WriteLine("Produsul nu a fost găsit în wishlist.");
+                }
+            }
+            else if (optiune == "6") // Mutare produse din wishlist în cos
+            {
+                Console.Write("ID produs: ");
+                int id = int.Parse(Console.ReadLine());
+                Console.Write("Cantitate: ");
+                int cantitate = int.Parse(Console.ReadLine());
+
+                var produs = client.wishlist.Produse.FirstOrDefault(p => p.Id == id);
+
+                if (produs != null)
+                {
+                    client.wishlist.MutaInCos(produs, cantitate, client.cosCumparaturi);
+                }
+                else
+                { 
+                    Console.WriteLine("Produsul nu a fost găsit în wishlist.");
+                }
+            }
+            else if (optiune == "7")
             {
                 Console.Write("Adresa de livrare: ");
                 string adresa = Console.ReadLine();
                 client.AdaugaComanda(adresa);
                 comenzi.AddRange(client.comenzi);
             }
-            else if (optiune == "4")
+            else if (optiune == "8")
             {
                 Console.Write("ID comanda: ");
                 int id = int.Parse(Console.ReadLine());
                 client.AnuleazaComanda(id);
             }
-            else if (optiune == "5")
+            else if (optiune == "9")
             {
                 Console.Write("ID produs: ");
                 int id = int.Parse(Console.ReadLine());
@@ -284,7 +350,7 @@ class Aplicatie
                     Console.WriteLine("Produsul nu a fost gasit!");
                 }
             }
-            else if (optiune == "6")
+            else if (optiune == "10")
             {
                 Console.Write("ID produs: ");
                 int id = int.Parse(Console.ReadLine());
@@ -309,7 +375,7 @@ class Aplicatie
                     Console.WriteLine("Produsul nu a fost gasit!");
                 }
             }
-            else if(optiune=="7")
+            else if(optiune=="11")
             {
                 break;
             }
