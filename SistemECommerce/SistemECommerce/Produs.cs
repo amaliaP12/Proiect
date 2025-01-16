@@ -63,8 +63,8 @@ public class Produs
         {
             PretFinal=reducere.AplicareReducere(PretFinal,cantitate);
         }
-
-        return Math.Max(PretFinal,0);
+        Pret= Math.Max(PretFinal,0);
+        return Pret;
     }
 
     public void AdaugaRating(int ratingNou)
