@@ -13,14 +13,18 @@ public static class DataManager
          {
              if (!File.Exists(filePath))
              {
-                 File.Create(filePath).Close();  // Creează fișierul dacă nu există
+                 // Creează fișierul dacă nu există
+                 File.Create(filePath).Close();  
              }
-         
+            //opțiuni pentru formatul json
              var options = new JsonSerializerOptions { WriteIndented = true };
+             //serializare obiect în json
              var json = JsonSerializer.Serialize(data, options);
+             //scriere json în fisier
              File.WriteAllText(filePath, json);
              Console.WriteLine($"Datele au fost salvate în {filePath}");
          }
+         //captura erori la salvare 
          catch (Exception ex)
          {
              Console.WriteLine($"Eroare la salvarea datelor: {ex.Message}");
@@ -32,17 +36,20 @@ public static class DataManager
     {
         try
         {
+            //verificare exitență fisier
             if (File.Exists(filePath))
             {
+                //citire conținut fișier
                 var json=File.ReadAllText(filePath);
                 return JsonSerializer.Deserialize<T>(json);
             }
         }
+        //capturare erori la incarcare
         catch (Exception e)
         {
             Console.WriteLine($"Eroare la incarcarea datelor: {e.Message}");
         }
-
+        //în cazul existenței erorilor, se va returna valoarea implicită
         return default(T);
     }
 }

@@ -7,7 +7,7 @@ public class Utilizator
     public string Email { get; set; }
     public string Parola { get; set; }
    
-
+    //constructor initializare utilizator
     public Utilizator(int id, string nume, string email, string parola)
     {
         Id = id;
@@ -16,8 +16,10 @@ public class Utilizator
         Parola = parola;
     }
     
+    //functie verificare parola introdusa
     public bool VerificaParola(string parola)
     {
+        //comparare parola introdusă cu parola utilizatorului
         return Parola == parola;
     }
 }

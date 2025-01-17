@@ -2,18 +2,24 @@ namespace SistemECommerce;
 
 class Aplicatie
 {
+    //lista produse disponibile in sistem
     private List<Produs> produse;
+    //lista comenzi plasate
     private List<Comanda> comenzi;
+    //SistemAutentificare este pentru autentificarea si inregistrarea utilizatoriilor
     private SistemAutentificare sistemAutentificare;
 
+    //constructor care initializeazăa aplicația și incarca datele inițiale
     public Aplicatie()
     {
         produse = new List<Produs>();
         comenzi = new List<Comanda>();
         sistemAutentificare = new SistemAutentificare();
+        //incarcare date initiale din fisiere
         IncarcaDateInitiale();
     }
 
+    // Funcție privată pentru încărcarea datelor inițiale
     private void IncarcaDateInitiale()
     {
         // Încarcă date doar dacă lista este goală
@@ -22,16 +28,17 @@ class Aplicatie
         {
             produse = produseIncarcate;
         }
+        //incarcare comenzi
         var comenziIncarcate = DataManager.IncarcaDate<List<Comanda>>("comenzi.json");
         if (comenziIncarcate != null && comenziIncarcate.Count > 0)
         {
             comenzi = comenziIncarcate;
         }
-
+        //incarcare utilizatori pe baza UserManager
         UserManager.IncarcaUtilizatori();
     }
 
-
+    //functie pornire aplicatie+gestionare meniu orincipal
     public void Porneste()
     {
         Console.WriteLine("Bine ai venit la Sistemul ECommerce!");
@@ -42,6 +49,7 @@ class Aplicatie
 
             if (optiune == "1")
             {
+                //autentificare utilizator
                 Console.Write("Email: ");
                 string email = Console.ReadLine();
                 Console.Write("Parola: ");
@@ -99,6 +107,7 @@ class Aplicatie
         }
     }
 
+    //functie gestionare meniu administrator
     private void MeniuAdministrator(Administrator admin)
     {
         while (true)
@@ -107,7 +116,7 @@ class Aplicatie
             var optiune = Console.ReadLine();
 
             if (optiune == "1")
-            {
+            {//adaugare produs
                 Console.Write("Nume produs: ");
                 string nume = Console.ReadLine();
                 Console.Write("Descriere: ");
@@ -118,12 +127,12 @@ class Aplicatie
                 int stoc = int.Parse(Console.ReadLine());
                 Console.Write("Categorie: ");
                 string categorie = Console.ReadLine();
-
+                //creare si adaugare produs nou
                 var produsNou = new Produs(produse.Count + 1, nume, descriere, pret, stoc, categorie);
                 admin.AdaugareProdus(produse, produsNou);
             }
             else if (optiune == "2")
-            {
+            {//editare produs existent
                 Console.Write("ID produs: ");
                 int id = int.Parse(Console.ReadLine());
                 Console.Write("Nume nou: ");
@@ -134,7 +143,7 @@ class Aplicatie
                 admin.EditeazaProdus(produse, id, nume, pret);
             }
             else if (optiune == "3")
-            {
+            {//ce zice in optiuni text
                 Console.Write("ID produs: ");
                 int id = int.Parse(Console.ReadLine());
                 admin.StergeProdus(produse, id);
@@ -193,18 +202,21 @@ class Aplicatie
                 Reducere reducere;
                 if (tip == 1)
                 {
+                    //reducere procentuala
                     Console.Write("Procent: ");
                     double procent = double.Parse(Console.ReadLine());
                     reducere = new DiscountProcent { Procent = procent };
                 }
                 else if (tip == 2)
-                {
+                {   
+                    //reduecre fixa
                     Console.Write("Valoare: ");
                     decimal valoare = decimal.Parse(Console.ReadLine());
                     reducere = new DiscountFix { Valoare = valoare };
                 }
                 else
                 {
+                    //reducere 2+1
                     reducere = new Reducere2Plus1();
                 }
             
@@ -240,7 +252,7 @@ class Aplicatie
                 }
             }
             else if (optiune == "2")
-            {
+            {//adaugare produs cos cumparaturi
                 Console.Write("ID produs: ");
                 int id = int.Parse(Console.ReadLine());
                 Console.Write("Cantitate: ");
@@ -388,23 +400,28 @@ class Aplicatie
 
     private void SalveazaDate()
     {
+        //salvare utilizatori folosind usermanager
         UserManager.SalveazaUtilizatori();
+        //verificare daca lista de produse nu sete null si contine elemnete
         if (produse != null && produse.Count > 0)
         {
+            //salveaza lista de produse intr-un fisier json
             DataManager.SalvareDate("produse.json", produse);
         }
         else
         {
-            
+            //mesaj daca nu eixsta produse de adaugat
             Console.WriteLine("Nu sunt produse de adaugat! ");
         }
-
+        //verificare lista comenzi 
         if (comenzi != null && comenzi.Count > 0)
         {
+            //analog produse
              DataManager.SalvareDate("comenzi.json", comenzi);
         }
         else
         {
+            //analog produse
             Console.WriteLine("Nu sunt comenzi de adaugat! ");
         }
        
