@@ -2,6 +2,8 @@
 
 public class CosCumparaturi
 {
+    //cheia produs reprezinta produsul adaugat in cos
+    //variabila int reprezinta cantitatea
     public Dictionary<Produs,int>Produse{get;set;}=new Dictionary<Produs,int>();
 
     public void AdaugaProdus(Produs produs, int cantitate)
@@ -19,11 +21,11 @@ public class CosCumparaturi
         }
         if (Produse.ContainsKey(produs))
         {
-            Produse[produs] += cantitate;
+            Produse[produs] += cantitate;//daca deja contine prod ,se modifica cantitatea
         }
         else
         {
-            Produse[produs] = cantitate;
+            Produse[produs] = cantitate;//il adauga daca nu este deja
         }
 
         produs.Stoc -= cantitate;// se actualizeaza stocul produsului
@@ -50,7 +52,7 @@ public class CosCumparaturi
             Console.WriteLine($"Produsul {produs.Nume} nu se afla in cosul de cumparaturi.");
             return;
         }
-        int cant_curenta=Produse[produs];
+        int cant_curenta=Produse[produs];//cantitatea curenta din cos
         if (cant_noua <= 0)
         {
             EliminaProdus(produs);
@@ -73,7 +75,7 @@ public class CosCumparaturi
     public decimal Calculeaza_total()
     {
         decimal total=0;
-        foreach (var (produs, cantitate) in Produse)
+        foreach (var (produs, cantitate) in Produse)//itereaza prin produsele din cos
         {
             total +=produs.Pret*cantitate;
             
