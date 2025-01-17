@@ -22,9 +22,8 @@ public static class UserManager
         Clienti = DataManager.IncarcaDate<List<Client>>(ClientiFilePath) ?? new List<Client>();
         Administratori = DataManager.IncarcaDate<List<Administrator>>(AdministratoriFilePath) ?? new List<Administrator>();
         Comenzi=DataManager.IncarcaDate<List<Comanda>>(ComandaFilePath) ?? new List<Comanda>();
-        //afisare nr clienți administartori si comenzi
-        Console.WriteLine($"Clienti încărcați: {Clienti.Count}");
-        Console.WriteLine($"Administratori încărcați: {Administratori.Count}");
+        Console.WriteLine($"Clienti incarcati: {Clienti.Count}");
+        Console.WriteLine($"Administratori incarcati: {Administratori.Count}");
         Console.WriteLine($"Comenzile au fost incarcate! {Comenzi.Count}");
     }
 
@@ -47,7 +46,7 @@ public static class UserManager
         }
         else
         {
-            Console.WriteLine("Clientul există deja!");
+            Console.WriteLine("Clientul exista deja!");
         }
     }
 
@@ -62,7 +61,7 @@ public static class UserManager
         }
         else
         {
-            Console.WriteLine("Administratorul există deja!");
+            Console.WriteLine("Administratorul exista deja!");
         }
     }
 }

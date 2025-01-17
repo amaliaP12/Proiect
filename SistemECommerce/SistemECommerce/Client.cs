@@ -18,7 +18,7 @@ public class Client:Utilizator
         if (!wishlist.Produse.Contains(produs))
         {
             wishlist.Produse.Add(produs);
-            Console.WriteLine($"Produsul{produs.Nume} a fost agaugat in wishlist");
+            Console.WriteLine($"Produsul{produs.Nume} a fost adaugat in wishlist");
         }
         else
         {
@@ -29,9 +29,10 @@ public class Client:Utilizator
     
     public void AgaugaCosCumparaturi(Produs produs,int cantitate)
     {
+        //verificam disponibilitatea stocului
         if (produs.Stoc < cantitate)
         {
-            Console.WriteLine($"Stocul este insuficient pentru{produs.Nume}. Disponibil: {produs.Stoc}");
+            Console.WriteLine($"Stocul este insuficient pentru {produs.Nume}. Disponibil: {produs.Stoc}");
             return;
         }
 
@@ -54,7 +55,7 @@ public class Client:Utilizator
             Console.WriteLine($"Cosul de cumparaturi este gol.Adauga un produs!");
             return ;
         }
-
+        //se foloseste nr  un ID unic si evita duplicarea ID-urilor
         var comandaNoua = new Comanda( this, adresa);
         foreach (var produs in cosCumparaturi.Produse)
         {
@@ -64,7 +65,7 @@ public class Client:Utilizator
              return;
             } 
             comandaNoua.Produse.Add((produs.Key, produs.Value));
-            produs.Key.Stoc -= produs.Value;
+            produs.Key.Stoc -= produs.Value;// reduce stocul cu cantitatea care s_a pus in comanda
         }
         comenzi.Add(comandaNoua);
         cosCumparaturi.Produse.Clear();
@@ -77,7 +78,7 @@ public class Client:Utilizator
         Comanda comandaAnulat = null;
         foreach (var comanda in comenzi)
         {
-            if (comanda.Id == comandaId)
+            if (comanda.Id == comandaId)//dca se gaseste comanda cu id de anulat si se atribuie la cokomanda de anu;llat
             {
                 comandaAnulat = comanda;
                 break;
@@ -91,9 +92,9 @@ public class Client:Utilizator
         }
 
         comandaAnulat.Status = "Anulata";
-        foreach (var (produs,cantitate) in comandaAnulat.Produse)
+        foreach (var (produs,cantitate) in comandaAnulat.Produse)//itereazza fiecare produse din comanda anulata
         {
-            produs.Stoc += cantitate;
+            produs.Stoc += cantitate;//restabilim cantitatea de produse din com anulata
         }
         Console.WriteLine($"Comanda cu ID {comandaId} a fost anulata si produsele au fost restabilite in cos!");
     }
