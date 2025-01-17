@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 1,
+    "Nume": "Banane",
+    "Descriere": "Uganda",
+    "Pret": 399,
+    "Stoc": 90,
+    "Rating": 0,
+    "Categorie": "fructe",
+    "Reduceri": []
+  },
+  {
+    "Id": 2,
+    "Nume": "lapte",
+    "Descriere": "lactate",
+    "Pret": 699,
+    "Stoc": 50,
+    "Rating": 0,
+    "Categorie": "lactate",
+    "Reduceri": []
+  }
+]
